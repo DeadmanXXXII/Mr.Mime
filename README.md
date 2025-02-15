@@ -1,10 +1,5 @@
 # Mr.Mime
 
-Sure! Below is a comprehensive write-up on MIME Content Alterations, covering attack techniques, defense bypasses, and Proof of Concepts (PoCs).
-
-
----
-
 MIME Content Alterations: Attacks, Bypasses, and Exploits
 
 Introduction

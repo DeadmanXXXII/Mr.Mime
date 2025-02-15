@@ -38,10 +38,10 @@ Many servers determine a file's type based on extension, instead of verifying MI
 PoC: Uploading a disguised file
 
 1. Save a malicious HTML file as evil.png:
-
+```
 <!-- Filename: evil.png -->
 <script>alert('XSS Attack!');</script>
-
+```
 
 2. Intercept the request (Burp Suite) and change:
 
@@ -63,17 +63,17 @@ Browsers sometimes guess content types based on content rather than headers.
 🚀 Attack: Force a JavaScript file to execute when it's treated as an image.
 
 PoC: Using MIME Sniffing to Execute JS
-
+```
 <!-- Saved as attack.png -->
 <script>alert('MIME Sniffing Exploit!');</script>
-
+```
 1. If X-Content-Type-Options: nosniff is not set, the browser may execute attack.png as JavaScript.
 
 
 2. A victim loading:
-
+```
 <script src="https://vulnerable.com/uploads/attack.png"></script>
-
+```
 could execute arbitrary JavaScript.
 
 
@@ -91,11 +91,11 @@ SVG files support JavaScript, making them an excellent XSS vector.
 🚀 Attack: Upload an SVG file with embedded JavaScript.
 
 PoC: SVG XSS Attack
-
+```
 <svg xmlns="http://www.w3.org/2000/svg">
   <script>alert('XSS via SVG!');</script>
 </svg>
-
+```
 1. If uploaded and served as an image, browsers execute the JavaScript.
 
 
@@ -120,17 +120,17 @@ If a site enforces nosniff, attackers can trick browsers into interpreting a dif
 PoC: Fake Image Execution
 
 1. Upload a JavaScript file disguised as an image:
-
+```
 payload.png.js
 
 invoice.pdf.html
-
+```
 
 
 2. If the site only checks extensions, browsers may execute:
-
+```
 <script src="https://target.com/uploads/payload.png"></script>
-
+```
 
 
 💡 Fix:
@@ -148,10 +148,10 @@ Polyglot files work as multiple formats at the same time.
 PoC: Image+HTML Polyglot
 
 Create a file that is both an image and executable HTML:
-
+```
 ÿØÿà   <!-- JPG Header -->
 <script>alert('Polyglot Attack!');</script>
-
+```
 1. If browsers treat this as image/jpeg, it looks normal.
 
 
@@ -172,17 +172,17 @@ Create a file that is both an image and executable HTML:
 PoC: Poisoning the Cache
 
 1. Upload:
-
+```
 Content-Type: text/plain
-
+```
 Response stores an HTML page in cache.
 
 
 
 2. Later, it’s served as:
-
+```
 Content-Type: text/html
-
+```
 🚨 The browser now executes previously safe content as HTML.
 
 
